@@ -1,13 +1,10 @@
 """
-Analytics Dashboard Page View for IntelliAssist AI.
-Presents system metrics, token counts, format distributions, and AI usage statistics.
+SOC Analytics & Threat Intelligence Metrics Page View for IntelAssist AI.
 """
 
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 import streamlit as st
-from components.metrics import render_metric_card
-from components.charts import render_doc_distribution_chart
-import pandas as pd
+from components.charts import render_ioc_distribution_chart, render_threat_severity_bar_chart, render_doc_distribution_chart
 
 def render_analytics_page(
     doc_infos: List[Dict[str, Any]],
@@ -15,93 +12,117 @@ def render_analytics_page(
     total_questions: int,
     total_summaries: int,
     total_searches: int,
-    avg_latency: float
+    extracted_iocs: Optional[List[Dict[str, Any]]] = None,
+    avg_latency: float = 0.28
 ):
-    """Render the comprehensive system analytics dashboard."""
+    """Render SOC threat intelligence metrics, IOC distributions, and performance telemetry."""
+    iocs = extracted_iocs or []
+
     st.markdown("""
-    <div style="margin-bottom:20px;">
+    <div style="margin-bottom:18px;">
         <div style="display:flex; align-items:center; gap:10px;">
-            <h2 style="font-weight:800; color:#ffffff; margin:0; letter-spacing:-0.02em;">📊 Intelligence & System Analytics</h2>
-            <span style="font-size:0.75rem; background:rgba(99,102,241,0.15); color:#a5b4fc; padding:3px 10px; border-radius:9999px; border:1px solid rgba(99,102,241,0.3);">
-                Telemetry & Insights
+            <h2 style="font-weight:800; color:#ffffff; margin:0; letter-spacing:-0.02em;">📈 SOC Analytics & Intelligence Telemetry</h2>
+            <span style="font-size:0.75rem; background:rgba(56,189,248,0.18); color:#38bdf8; padding:3px 10px; border-radius:9999px; border:1px solid rgba(56,189,248,0.35); font-weight:700;">
+                Live Intelligence Telemetry
             </span>
         </div>
         <p style="color:#94a3b8; font-size:0.92rem; margin:4px 0 0 0;">
-            Track document corpus growth, vector database density, query distributions, and processing latencies.
+            Comprehensive visibility into threat indicator distributions, severity distributions, and vector retrieval throughput.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Document & Vector Metrics Row
-    st.markdown("<h4 style='color:#f8fafc; font-size:1.05rem; font-weight:700; margin:0 0 12px 0;'>📚 Corpus & Vector Database Status</h4>", unsafe_allow_html=True)
-    
-    total_pages = sum(d.get("total_pages", 1) for d in doc_infos)
-    total_chars = sum(d.get("total_chars", 0) for d in doc_infos)
-    total_words = sum(d.get("total_words", 0) for d in doc_infos)
-    
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        render_metric_card("Total Documents", len(doc_infos), "📄", "Active", "Processed Files")
-    with col2:
-        render_metric_card("Total Pages", total_pages, "📑", "Normalized", "Extracted Pages")
-    with col3:
-        render_metric_card("Total Chunks", total_chunks, "🧩", "Stored", "500-char Chunks")
-    with col4:
-        render_metric_card("Indexed Vectors", total_chunks, "⚡", "384-dim", "Cosine Embeddings")
+    # 4 Key Metrics
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.markdown(f"""
+        <div class="metric-card">
+            <span style="font-size:0.75rem; color:#94a3b8; font-weight:700;">TOTAL THREAT ARTIFACTS</span>
+            <div class="stat-val" style="color:#38bdf8;">{len(doc_infos)}</div>
+            <span style="font-size:0.72rem; color:#64748b;">Ingested Files</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with c2:
+        st.markdown(f"""
+        <div class="metric-card">
+            <span style="font-size:0.75rem; color:#94a3b8; font-weight:700;">VECTOR EMBEDDINGS</span>
+            <div class="stat-val" style="color:#818cf8;">{total_chunks:,}</div>
+            <span style="font-size:0.72rem; color:#64748b;">384-dim Vectors</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with c3:
+        st.markdown(f"""
+        <div class="metric-card">
+            <span style="font-size:0.75rem; color:#94a3b8; font-weight:700;">TOTAL EXTRACTED IOCS</span>
+            <div class="stat-val" style="color:#10b981;">{len(iocs)}</div>
+            <span style="font-size:0.72rem; color:#64748b;">Indicators Active</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with c4:
+        st.markdown(f"""
+        <div class="metric-card">
+            <span style="font-size:0.75rem; color:#94a3b8; font-weight:700;">AVG SEARCH LATENCY</span>
+            <div class="stat-val" style="color:#f59e0b;">{avg_latency:.2f}s</div>
+            <span style="font-size:0.72rem; color:#64748b;">Cosine Index Speed</span>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("<div style='margin:24px 0;'></div>", unsafe_allow_html=True)
 
-    # AI Usage Metrics Row
-    st.markdown("<h4 style='color:#f8fafc; font-size:1.05rem; font-weight:700; margin:0 0 12px 0;'>🤖 AI & Pipeline Performance</h4>", unsafe_allow_html=True)
-    
-    u_col1, u_col2, u_col3, u_col4 = st.columns(4)
-    with u_col1:
-        render_metric_card("Questions Asked", total_questions, "💬", "+ RAG", "Conversational Q&A")
-    with u_col2:
-        render_metric_card("Summaries Built", total_summaries, "📝", "Multi-Mode", "Executive Briefs")
-    with u_col3:
-        render_metric_card("Semantic Searches", total_searches, "🔎", "Dense Match", "Concept Lookups")
-    with u_col4:
-        render_metric_card("Average Latency", f"{avg_latency:.2f}s", "⏱️", "Sub-second", "Inference & Search")
+    # Two Column Chart Layout
+    col_ioc_chart, col_sev_chart = st.columns(2)
 
-    st.markdown("<div style='margin:28px 0;'></div>", unsafe_allow_html=True)
+    with col_ioc_chart:
+        st.markdown("""<div class="modern-card" style="padding:16px;">""", unsafe_allow_html=True)
+        # Compute IOC Type Counts
+        type_counts: Dict[str, int] = {}
+        for i in iocs:
+            t = i.get("type", "Other")
+            type_counts[t] = type_counts.get(t, 0) + 1
+        if not type_counts:
+            type_counts = {"IP Address": 3, "Domain": 2, "SHA256": 2, "CVE": 2, "Suspicious File": 1}
+        render_ioc_distribution_chart(type_counts)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    # Charts and Table Row
-    c_pie, c_table = st.columns([1.8, 2.2])
+    with col_sev_chart:
+        st.markdown("""<div class="modern-card" style="padding:16px;">""", unsafe_allow_html=True)
+        # Compute Severity Counts
+        sev_counts: Dict[str, int] = {}
+        for i in iocs:
+            s = i.get("risk_level", "Medium")
+            sev_counts[s] = sev_counts.get(s, 0) + 1
+        if not sev_counts:
+            sev_counts = {"Critical": 3, "High": 2, "Elevated": 2, "Medium": 2, "Low": 1}
+        render_threat_severity_bar_chart(sev_counts)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    with c_pie:
-        st.markdown("<div class='modern-card'>", unsafe_allow_html=True)
-        # Compute doc extension counts
-        doc_type_counts = {}
+    st.markdown("<div style='margin:20px 0;'></div>", unsafe_allow_html=True)
+
+    # Document Formats Breakdown
+    col_fmt, col_usage = st.columns([1, 1])
+    with col_fmt:
+        st.markdown("""<div class="modern-card" style="padding:16px;">""", unsafe_allow_html=True)
+        fmt_counts: Dict[str, int] = {}
         for d in doc_infos:
-            ext = d.get("file_ext", ".txt").upper().replace(".", "")
-            doc_type_counts[ext] = doc_type_counts.get(ext, 0) + 1
-            
-        if not doc_type_counts:
-            doc_type_counts = {"PDF": 1, "DOCX": 1, "TXT": 1}
-            
-        render_doc_distribution_chart(doc_type_counts)
+            ext = d.get("file_ext", ".txt").upper()
+            fmt_counts[ext] = fmt_counts.get(ext, 0) + 1
+        if not fmt_counts:
+            fmt_counts = {"PDF": 1, "DOCX": 1, "LOG": 2, "CSV": 1}
+        render_doc_distribution_chart(fmt_counts)
         st.markdown("</div>", unsafe_allow_html=True)
 
-    with c_table:
-        st.markdown("""
-        <div class="modern-card">
-            <h4 style="margin:0 0 12px 0; font-size:1rem; font-weight:700; color:#f8fafc;">📑 Document Breakdown</h4>
+    with col_usage:
+        st.markdown(f"""
+        <div class="modern-card" style="padding:20px 24px; height:100%;">
+            <div style="font-weight:700; font-size:1.05rem; color:#f8fafc; margin-bottom:14px;">
+                ⚡ Investigation Engine Operations
+            </div>
+            <div style="font-size:0.86rem; color:#cbd5e1; line-height:2.0;">
+                • <b>Threat Inquiries Answered:</b> <span style="color:#38bdf8; font-weight:700;">{total_questions}</span><br>
+                • <b>Executive Summaries Generated:</b> <span style="color:#10b981; font-weight:700;">{total_summaries}</span><br>
+                • <b>Vector Semantic Searches:</b> <span style="color:#f59e0b; font-weight:700;">{total_searches}</span><br>
+                • <b>Vector Index Status:</b> <span style="color:#10b981; font-weight:700;">Online & In-Memory</span><br>
+                • <b>Local NLP Synthesizer:</b> <span style="color:#a855f7; font-weight:700;">Ready (Zero API Keys Required)</span>
+            </div>
+        </div>
         """, unsafe_allow_html=True)
-        
-        if doc_infos:
-            table_data = []
-            for d in doc_infos:
-                table_data.append({
-                    "Filename": d.get("filename", "Doc"),
-                    "Type": d.get("file_ext", "").upper(),
-                    "Pages": d.get("total_pages", 1),
-                    "Chunks": d.get("chunk_count", 0),
-                    "Words": f"{d.get('total_words', 0):,}"
-                })
-            df = pd.DataFrame(table_data)
-            st.dataframe(df, use_container_width=True, hide_index=True)
-        else:
-            st.info("No documents uploaded yet. Upload documents to see the breakdown table.")
-            
-        st.markdown("</div>", unsafe_allow_html=True)

@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="indigo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4338ca" />
+    </linearGradient>
+    <linearGradient id="cyan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="emerald-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="purple-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#7e22ce" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#818cf8" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="680" rx="16" fill="url(#bg-grad)" />
+
+  <!-- Header & Title -->
+  <text x="60" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="800" fill="#f8fafc" letter-spacing="-0.5">⚡ IntelliAssist AI — Production RAG Architecture</text>
+  <text x="60" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#94a3b8">Multi-format Document Ingestion • Dense Neural Embeddings (all-MiniLM-L6-v2) • Cosine Similarity Index • Source-Grounded RAG</text>
+
+  <!-- Subtitle Badges -->
+  <rect x="940" y="36" width="200" height="28" rx="14" fill="#6366f1" fill-opacity="0.15" stroke="#6366f1" stroke-opacity="0.4" />
+  <text x="1040" y="55" font-family="sans-serif" font-size="11" font-weight="700" fill="#c7d2fe" text-anchor="middle">Enterprise RAG Engine</text>
+
+  <!-- ================= INGESTION PIPELINE (TOP ROW) ================= -->
+  
+  <!-- Step 1: Uploads -->
+  <g transform="translate(60, 120)" filter="url(#card-shadow)">
+    <rect width="210" height="150" rx="12" fill="#1e293b" fill-opacity="0.8" stroke="#334155" stroke-width="1.5" />
+    <rect x="14" y="14" width="36" height="36" rx="8" fill="url(#cyan-grad)" />
+    <text x="32" y="38" font-family="sans-serif" font-size="18" fill="#ffffff" text-anchor="middle">📄</text>
+    <text x="60" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#f8fafc">1. Ingestion</text>
+    <text x="60" y="48" font-family="sans-serif" font-size="11" fill="#38bdf8">Multi-Format Guard</text>
+    <path d="M 14 62 L 196 62" stroke="#334155" stroke-width="1" />
+    <text x="14" y="82" font-family="sans-serif" font-size="11" fill="#cbd5e1">• PDF, DOCX, TXT, MD</text>
+    <text x="14" y="102" font-family="sans-serif" font-size="11" fill="#cbd5e1">• SHA-256 Duplicate Check</text>
+    <text x="14" y="122" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Corrupt &amp; Scan Detection</text>
+    <rect x="14" y="130" width="182" height="4" rx="2" fill="#0ea5e9" />
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="275" y1="195" x2="335" y2="195" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="4,2" />
+
+  <!-- Step 2: Parser & Chunker -->
+  <g transform="translate(345, 120)" filter="url(#card-shadow)">
+    <rect width="220" height="150" rx="12" fill="#1e293b" fill-opacity="0.8" stroke="#334155" stroke-width="1.5" />
+    <rect x="14" y="14" width="36" height="36" rx="8" fill="url(#indigo-grad)" />
+    <text x="32" y="38" font-family="sans-serif" font-size="18" fill="#ffffff" text-anchor="middle">🧩</text>
+    <text x="60" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#f8fafc">2. Parser &amp; Chunker</text>
+    <text x="60" y="48" font-family="sans-serif" font-size="11" fill="#818cf8">Text Normalization</text>
+    <path d="M 14 62 L 206 62" stroke="#334155" stroke-width="1" />
+    <text x="14" y="82" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Recursive Sentence Splitting</text>
+    <text x="14" y="102" font-family="sans-serif" font-size="11" fill="#cbd5e1">• 500 Char Chunks / 100 Overlap</text>
+    <text x="14" y="122" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Page-Level Metadata Tagging</text>
+    <rect x="14" y="130" width="192" height="4" rx="2" fill="#6366f1" />
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="570" y1="195" x2="630" y2="195" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="4,2" />
+
+  <!-- Step 3: Embeddings Engine -->
+  <g transform="translate(640, 120)" filter="url(#card-shadow)">
+    <rect width="230" height="150" rx="12" fill="#1e293b" fill-opacity="0.8" stroke="#6366f1" stroke-width="1.8" />
+    <rect x="14" y="14" width="36" height="36" rx="8" fill="url(#purple-grad)" />
+    <text x="32" y="38" font-family="sans-serif" font-size="18" fill="#ffffff" text-anchor="middle">🧠</text>
+    <text x="60" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#f8fafc">3. Embeddings Engine</text>
+    <text x="60" y="48" font-family="sans-serif" font-size="11" fill="#c084fc">384-Dim Dense Vectors</text>
+    <path d="M 14 62 L 216 62" stroke="#334155" stroke-width="1" />
+    <text x="14" y="82" font-family="sans-serif" font-size="11" fill="#cbd5e1">• all-MiniLM-L6-v2 (Neural)</text>
+    <text x="14" y="102" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Gemini / OpenAI Cloud API</text>
+    <text x="14" y="122" font-family="sans-serif" font-size="11" fill="#cbd5e1">• L2 Vector Normalization</text>
+    <rect x="14" y="130" width="202" height="4" rx="2" fill="#a855f7" />
+  </g>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="875" y1="195" x2="935" y2="195" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="4,2" />
+
+  <!-- Step 4: Vector Store -->
+  <g transform="translate(945, 120)" filter="url(#card-shadow)">
+    <rect width="195" height="150" rx="12" fill="#1e293b" fill-opacity="0.8" stroke="#334155" stroke-width="1.5" />
+    <rect x="14" y="14" width="36" height="36" rx="8" fill="url(#emerald-grad)" />
+    <text x="32" y="38" font-family="sans-serif" font-size="18" fill="#ffffff" text-anchor="middle">🗄️</text>
+    <text x="60" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#f8fafc">4. Vector DB</text>
+    <text x="60" y="48" font-family="sans-serif" font-size="11" fill="#34d399">Cosine Index</text>
+    <path d="M 14 62 L 181 62" stroke="#334155" stroke-width="1" />
+    <text x="14" y="82" font-family="sans-serif" font-size="11" fill="#cbd5e1">• In-Memory Matrix Index</text>
+    <text x="14" y="102" font-family="sans-serif" font-size="11" fill="#cbd5e1">• JSON Metadata Storage</text>
+    <text x="14" y="122" font-family="sans-serif" font-size="11" fill="#cbd5e1">• NumPy Disk Persistence</text>
+    <rect x="14" y="130" width="167" height="4" rx="2" fill="#10b981" />
+  </g>
+
+  <!-- Connective Downward Arrow from Vector Store to Retrieval -->
+  <path d="M 1042 275 L 1042 355 L 875 355" fill="none" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-green)" stroke-dasharray="4,2" />
+
+  <!-- ================= RETRIEVAL & GENERATION (BOTTOM ROW) ================= -->
+
+  <!-- User Query Input -->
+  <g transform="translate(60, 420)" filter="url(#card-shadow)">
+    <rect width="210" height="180" rx="12" fill="#1e293b" fill-opacity="0.9" stroke="#6366f1" stroke-width="1.8" />
+    <rect x="14" y="14" width="36" height="36" rx="8" fill="url(#indigo-grad)" />
+    <text x="32" y="38" font-family="sans-serif" font-size="18" fill="#ffffff" text-anchor="middle">👤</text>
+    <text x="60" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#f8fafc">User Query</text>
+    <text x="60" y="48" font-family="sans-serif" font-size="11" fill="#a5b4fc">Chat &amp; Search Input</text>
+    <path d="M 14 62 L 196 62" stroke="#334155" stroke-width="1" />
+    <text x="14" y="84" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Natural Language Query</text>
+    <text x="14" y="104" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Typo &amp; Slang Normalization</text>
+    <text x="14" y="124" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Document Mention Detection</text>
+    <text x="14" y="144" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Single/Multi-Doc Scoping</text>
+  </g>
+
+  <!-- Arrow User Query -> Query Preprocessor & Ranker -->
+  <line x1="275" y1="510" x2="335" y2="510" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Semantic Retriever & Ranker -->
+  <g transform="translate(345, 420)" filter="url(#card-shadow)">
+    <rect width="260" height="180" rx="12" fill="#1e293b" fill-opacity="0.9" stroke="#334155" stroke-width="1.5" />
+    <rect x="14" y="14" width="36" height="36" rx="8" fill="url(#cyan-grad)" />
+    <text x="32" y="38" font-family="sans-serif" font-size="18" fill="#ffffff" text-anchor="middle">⚡</text>
+    <text x="60" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#f8fafc">Top-K Context Ranker</text>
+    <text x="60" y="48" font-family="sans-serif" font-size="11" fill="#38bdf8">Cosine Similarity Scoring</text>
+    <path d="M 14 62 L 246 62" stroke="#334155" stroke-width="1" />
+    <text x="14" y="84" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Semantic Similarity Matching</text>
+    <text x="14" y="104" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Exact Keyword Overlap Bonus</text>
+    <text x="14" y="124" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Calibrated Relevance Badges</text>
+    <text x="14" y="144" font-family="sans-serif" font-size="11" fill="#f87171">• Low-Confidence Hallucination Guard</text>
+  </g>
+
+  <!-- Arrow Ranker -> LLM / RAG Synthesis -->
+  <line x1="610" y1="510" x2="670" y2="510" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Multi-Provider LLM & RAG Engine -->
+  <g transform="translate(680, 420)" filter="url(#card-shadow)">
+    <rect width="210" height="180" rx="12" fill="#1e293b" fill-opacity="0.9" stroke="#334155" stroke-width="1.5" />
+    <rect x="14" y="14" width="36" height="36" rx="8" fill="url(#purple-grad)" />
+    <text x="32" y="38" font-family="sans-serif" font-size="18" fill="#ffffff" text-anchor="middle">🤖</text>
+    <text x="60" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#f8fafc">RAG Synthesis</text>
+    <text x="60" y="48" font-family="sans-serif" font-size="11" fill="#c084fc">Generative AI Engine</text>
+    <path d="M 14 62 L 196 62" stroke="#334155" stroke-width="1" />
+    <text x="14" y="84" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Google Gemini 2.0 / 1.5</text>
+    <text x="14" y="104" font-family="sans-serif" font-size="11" fill="#cbd5e1">• OpenAI GPT-4o / Mini</text>
+    <text x="14" y="124" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Smart Local Demo Mode</text>
+    <text x="14" y="144" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Context Assembly &amp; Prompts</text>
+  </g>
+
+  <!-- Arrow LLM -> Final Response -->
+  <line x1="895" y1="510" x2="945" y2="510" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-green)" />
+
+  <!-- Final Output Card -->
+  <g transform="translate(955, 420)" filter="url(#card-shadow)">
+    <rect width="185" height="180" rx="12" fill="#1e293b" fill-opacity="0.9" stroke="#10b981" stroke-width="1.8" />
+    <rect x="14" y="14" width="36" height="36" rx="8" fill="url(#emerald-grad)" />
+    <text x="32" y="38" font-family="sans-serif" font-size="18" fill="#ffffff" text-anchor="middle">✨</text>
+    <text x="60" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#f8fafc">Grounded AI</text>
+    <text x="60" y="48" font-family="sans-serif" font-size="11" fill="#34d399">Verified Response</text>
+    <path d="M 14 62 L 171 62" stroke="#334155" stroke-width="1" />
+    <text x="14" y="84" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Multi-Section Answer</text>
+    <text x="14" y="104" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Page-Level Citations</text>
+    <text x="14" y="124" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Snippet Highlights</text>
+    <text x="14" y="144" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Cross-Doc Compare</text>
+  </g>
+
+</svg>

@@ -1,0 +1,11 @@
+indicator,type,risk_level,context,threat_actor,cve_id,confidence
+185.220.101.5,IP Address,Critical,Command and Control Server (C2),APT29,CVE-2023-38831,High
+194.26.29.112,IP Address,High,Data Exfiltration Relay,APT29,,High
+login-microsoft-secure.com,Domain,Critical,Credential Phishing Domain,APT29,,High
+cdn-update-service.org,Domain,High,Malware Payload Delivery,APT29,,High
+https://login-microsoft-secure.com/auth/login,URL,Critical,Phishing Endpoint,APT29,,High
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,SHA256,Critical,Weaponized Dropper Archive,APT29,CVE-2023-38831,High
+8f4e56c7a912e8b1a3d4f5e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6,SHA256,High,Cobalt Strike HTTPS Beacon DLL,APT29,,High
+CVE-2023-38831,CVE,Critical,WinRAR Remote Code Execution Vulnerability,APT29,CVE-2023-38831,High
+CVE-2021-44228,CVE,Critical,Apache Log4j RCE (Log4Shell),Generic Exploit,CVE-2021-44228,High
+mimikatz.exe,Suspicious File,Critical,Credential Dumping Tool,APT29,,High

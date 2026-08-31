@@ -1,0 +1,51 @@
+Aug 31 10:20:10 ubuntu-server sshd[14201]: Failed password for invalid user admin from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:11 ubuntu-server sshd[14201]: Failed password for invalid user admin from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:12 ubuntu-server sshd[14201]: Failed password for invalid user admin from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:13 ubuntu-server sshd[14201]: Failed password for invalid user root from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:14 ubuntu-server sshd[14201]: Failed password for invalid user root from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:15 ubuntu-server sshd[14201]: Failed password for invalid user root from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:16 ubuntu-server sshd[14201]: Failed password for invalid user oracle from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:17 ubuntu-server sshd[14201]: Failed password for invalid user oracle from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:18 ubuntu-server sshd[14201]: Failed password for invalid user oracle from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:19 ubuntu-server sshd[14201]: Failed password for invalid user test from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:20 ubuntu-server sshd[14201]: Failed password for invalid user test from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:21 ubuntu-server sshd[14201]: Failed password for invalid user test from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:22 ubuntu-server sshd[14201]: Failed password for invalid user support from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:23 ubuntu-server sshd[14201]: Failed password for invalid user support from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:24 ubuntu-server sshd[14201]: Failed password for invalid user support from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:25 ubuntu-server sshd[14201]: Failed password for invalid user ubuntu from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:26 ubuntu-server sshd[14201]: Failed password for invalid user ubuntu from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:27 ubuntu-server sshd[14201]: Failed password for invalid user ubuntu from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:28 ubuntu-server sshd[14201]: Failed password for invalid user guest from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:29 ubuntu-server sshd[14201]: Failed password for invalid user guest from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:30 ubuntu-server sshd[14201]: Failed password for invalid user guest from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:31 ubuntu-server sshd[14201]: Failed password for invalid user deploy from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:32 ubuntu-server sshd[14201]: Failed password for invalid user deploy from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:33 ubuntu-server sshd[14201]: Failed password for invalid user deploy from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:34 ubuntu-server sshd[14201]: Failed password for invalid user postgres from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:35 ubuntu-server sshd[14201]: Failed password for invalid user postgres from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:36 ubuntu-server sshd[14201]: Failed password for invalid user postgres from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:37 ubuntu-server sshd[14201]: Failed password for invalid user jenkins from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:38 ubuntu-server sshd[14201]: Failed password for invalid user jenkins from 185.220.101.5 port 49152 ssh2
+Aug 31 10:20:39 ubuntu-server sshd[14201]: Failed password for invalid user jenkins from 185.220.101.5 port 49152 ssh2
+Aug 31 10:22:00 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:01 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:02 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:03 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:04 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:05 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:06 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:07 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:08 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:09 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:10 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:11 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:12 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:13 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:22:14 ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2
+Aug 31 10:24:12 ubuntu-server sshd[14400]: Accepted password for ubuntu from 185.220.101.5 port 49310 ssh2
+Aug 31 10:24:13 ubuntu-server systemd-logind[780]: New session 42 of user ubuntu.
+Aug 31 10:24:45 ubuntu-server sudo:   ubuntu : TTY=pts/0 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/usr/bin/whoami
+Aug 31 10:25:02 ubuntu-server sudo:   ubuntu : TTY=pts/0 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/bin/bash
+Aug 31 10:25:30 ubuntu-server sudo:   ubuntu : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/bin/cat /etc/shadow
+Aug 31 10:26:15 ubuntu-server sudo:   ubuntu : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/usr/bin/chmod 777 /etc/passwd

@@ -1,0 +1,70 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1248 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+50 750 Td
+/F1 12 Tf
+(INTELASSIST THREAT RESEARCH: APT29 COZY BEAR ADVISORY) Tj
+/F1 10 Tf
+T*
+T*
+T*
+(Executive Summary:) Tj
+T*
+(IntelAssist Threat Research has detected a spear-phishing campaign attributed to threat actor APT29.) Tj
+T*
+(The adversary distributes malicious archives exploiting CVE-2023-38831 for remote code execution.) Tj
+T*
+(Observed C2 infrastructure includes IP 185.220.101.5 and domain login-microsoft-secure.com.) Tj
+T*
+T*
+(Technical Analysis & Attack Chain:) Tj
+T*
+(1. Spear-phishing email delivers weaponized ZIP file \(SHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\).) Tj
+T*
+(2. WinRAR vulnerability CVE-2023-38831 executes hidden script without user interaction.) Tj
+T*
+(3. Outbound beacon connects to 185.220.101.5 on port 443 to fetch beacon.dll.) Tj
+T*
+(4. Adversary deploys mimikatz.exe for memory credential harvesting.) Tj
+T*
+T*
+(Recommended Containment Actions:) Tj
+T*
+(1. Immediately block IP 185.220.101.5 and 194.26.29.112 across all perimeter firewalls.) Tj
+T*
+(2. Sinkhole phishing domain login-microsoft-secure.com and payload server cdn-update-service.org.) Tj
+T*
+(3. Patch all endpoints against CVE-2023-38831 and enforce MFA on administrative accounts.) Tj
+T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000001541 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1611
+%%EOF

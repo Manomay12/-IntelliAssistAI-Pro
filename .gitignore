@@ -30,6 +30,11 @@ ENV/
 .env
 .env.local
 
+# Testing & Caches
+.pytest_cache/
+.coverage
+htmlcov/
+
 # Data storage & Vector DB runtime artifacts
 data/uploads/*
 !data/uploads/.gitkeep
@@ -37,6 +42,13 @@ data/vector_db/*
 !data/vector_db/.gitkeep
 data/conversations/*
 !data/conversations/.gitkeep
+data/users/*.db
+data/documents_metadata.json
+data/parsed_logs.json
+data/documents/*
+!data/documents/.gitkeep
+data/logs/*
+!data/logs/.gitkeep
 
 # Streamlit Secrets (keep config.toml tracked)
 .streamlit/secrets.toml

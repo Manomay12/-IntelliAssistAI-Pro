@@ -1,6 +1,7 @@
 """
-Sample documents generator for IntelliAssist AI.
-Creates realistic academic & technical PDF, DOCX, and TXT files for 1-click evaluation.
+Cybersecurity Sample Data Generator for IntelAssist AI.
+Generates realistic, safe, high-fidelity sample threat advisories, SSH authentication logs,
+firewall traffic logs, web server attack logs, and forensic incident reports for instant 1-click evaluation.
 """
 
 import io
@@ -8,206 +9,216 @@ from pathlib import Path
 import docx
 from utils.config import SAMPLE_DATA_DIR
 
-def create_sample_docx(filepath: Path):
-    """Create a structured sample DOCX project report."""
+def create_sample_threat_report_docx(filepath: Path):
+    """Create a structured sample DOCX Threat Intelligence Report."""
     doc = docx.Document()
-    doc.add_heading("Major Project Report: IntelliAssist AI Document Intelligence", level=0)
+    doc.add_heading("THREAT ADVISORY: APT29 (COZY BEAR) SPEAR-PHISHING CAMPAIGN", level=0)
     
     doc.add_heading("1. Executive Summary", level=1)
     doc.add_paragraph(
-        "IntelliAssist AI represents a next-generation Document Intelligence and Conversational Retrieval-Augmented "
-        "Generation (RAG) platform. Modern students, enterprise analysts, and researchers face severe information overload "
-        "when querying large document repositories. Traditional keyword search fails to capture semantic meaning and intent. "
-        "Our system combines multi-format parsing, recursive text chunking, dense vector embeddings, cosine vector indexing, "
-        "and large language model synthesis to deliver verifiable answers with exact source citations."
+        "IntelAssist Threat Research has identified an active cyber espionage campaign attributed to threat actor "
+        "APT29 (also tracked as Cozy Bear, Midnight Blizzard, NOBELIUM). The adversary utilizes targeted spear-phishing "
+        "emails delivering malicious ZIP archives exploiting CVE-2023-38831 (WinRAR code execution vulnerability) to deploy "
+        "custom Cobalt Strike beacons and backdoor payloads. The primary objectives appear to be credential harvesting, "
+        "session hijacking, and long-term espionage across government, defense, and technology sectors."
     )
     
-    doc.add_heading("2. Core System Architecture", level=1)
+    doc.add_heading("2. Attack Flow & Technical Analysis", level=1)
     doc.add_paragraph(
-        "The architecture is structured into four distinct modular pipelines: "
-        "1. Ingestion Pipeline: Supports PDF, DOCX, and TXT extraction with layout normalization. "
-        "2. Chunking & Indexing Pipeline: Partitions documents into 500-character overlapping chunks while preserving page metadata. "
-        "3. Semantic Vector Store: Embeds chunk tokens into 384-dimensional vector space using cosine distance indexing. "
-        "4. RAG Synthesis Pipeline: Formulates dynamic context prompts and prompts LLMs for structured answers with page citations."
+        "Initial Access is established via phishing emails containing lure PDFs and weaponized archives. "
+        "Upon extraction, the vulnerability triggers execution of a hidden batch script, which contacts external C2 server "
+        "185.220.101.5 on port 443. The secondary stage downloads payload beacon.dll from domain cdn-update-service.org. "
+        "Adversaries then perform local privilege escalation via sudo misconfigurations and OS credential dumping using Mimikatz."
     )
     
-    doc.add_heading("3. Performance Benchmarks & Results", level=1)
+    doc.add_heading("3. Indicators of Compromise (IOC Table)", level=1)
     table = doc.add_table(rows=1, cols=4)
     hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = "Component"
-    hdr_cells[1].text = "Metric"
-    hdr_cells[2].text = "Baseline"
-    hdr_cells[3].text = "IntelliAssist AI"
+    hdr_cells[0].text = "Indicator"
+    hdr_cells[1].text = "Type"
+    hdr_cells[2].text = "Risk Level"
+    hdr_cells[3].text = "Context / Association"
     
     data = [
-        ("Retrieval Latency", "Search Time (ms)", "145 ms", "18 ms"),
-        ("Answer Faithfulness", "F1 Score (%)", "71.2%", "94.6%"),
-        ("Source Attribution", "Accuracy (%)", "65.0%", "98.2%"),
-        ("Vector DB Throughput", "Chunks/sec", "250", "1,850")
+        ("185.220.101.5", "IPv4 Address", "Critical", "Primary APT29 Command & Control (C2)"),
+        ("194.26.29.112", "IPv4 Address", "High", "Secondary Exfiltration Staging Node"),
+        ("login-microsoft-secure.com", "Domain", "Critical", "Credential Harvesting Phishing Domain"),
+        ("cdn-update-service.org", "Domain", "High", "Malware Payload Distribution Server"),
+        ("https://login-microsoft-secure.com/auth/login", "URL", "Critical", "Phishing Landing Page"),
+        ("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "SHA256", "Critical", "Weaponized Dropper Executable"),
+        ("8f4e56c7a912e8b1a3d4f5e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6", "SHA256", "High", "Cobalt Strike HTTPS Beacon DLL"),
+        ("CVE-2023-38831", "CVE", "Critical", "WinRAR Processing Logic Remote Code Execution"),
+        ("CVE-2021-44228", "CVE", "Critical", "Apache Log4j Remote Code Execution (Secondary Probe)"),
+        ("mimikatz.exe", "Suspicious File", "Critical", "Credential Extraction Tool")
     ]
     for row_data in data:
         row_cells = table.add_row().cells
         for i, val in enumerate(row_data):
             row_cells[i].text = val
             
-    doc.add_heading("4. Future Enhancements & Conclusion", level=1)
+    doc.add_heading("4. MITRE ATT&CK Mapping & Mitigations", level=1)
     doc.add_paragraph(
-        "In conclusion, IntelliAssist AI provides a robust, scalable, and highly accurate solution for automated "
-        "document understanding. Future work will integrate multi-modal chart comprehension, tabular question answering, "
-        "and distributed vector storage clustering."
+        "- T1566.001 Spear-phishing Attachment: Block inbound emails containing password-protected ZIP/RAR files.\n"
+        "- T1190 Exploit Public-Facing Application: Patch CVE-2023-38831 and ensure perimeter systems run updated software.\n"
+        "- T1110 Brute Force: Enforce account lockouts after 5 invalid attempts and mandate Multi-Factor Authentication (MFA).\n"
+        "- T1071.001 Web Protocols (C2): Block IP 185.220.101.5 and sinkhole domain cdn-update-service.org."
     )
     
     doc.save(filepath)
 
-def create_sample_txt(filepath: Path):
-    """Create a detailed sample text file on AI in Healthcare."""
-    content = """================================================================================
-AI IN HEALTHCARE & CLINICAL DECISION SUPPORT: A COMPREHENSIVE OVERVIEW
-================================================================================
+def create_sample_auth_log(filepath: Path):
+    """Create a realistic Linux auth.log demonstrating SSH brute-force, successful login, and sudo escalation."""
+    lines = []
+    base_time = "Aug 31 10:20:"
+    
+    # 1. SSH Brute Force attempts from 185.220.101.5
+    users = ["admin", "root", "oracle", "test", "support", "ubuntu", "guest", "deploy", "postgres", "jenkins"]
+    sec = 10
+    for u in users:
+        for attempt in range(3):
+            lines.append(f"Aug 31 10:20:{sec:02d} ubuntu-server sshd[14201]: Failed password for invalid user {u} from 185.220.101.5 port 49152 ssh2")
+            sec = (sec + 1) % 60
+            if sec == 0:
+                base_time = "Aug 31 10:21:"
+        
+    for i in range(15):
+        lines.append(f"Aug 31 10:22:{i:02d} ubuntu-server sshd[14350]: Failed password for ubuntu from 185.220.101.5 port 49200 ssh2")
+        
+    # 2. Compromise: Successful authentication after brute-force
+    lines.append("Aug 31 10:24:12 ubuntu-server sshd[14400]: Accepted password for ubuntu from 185.220.101.5 port 49310 ssh2")
+    lines.append("Aug 31 10:24:13 ubuntu-server systemd-logind[780]: New session 42 of user ubuntu.")
+    lines.append("Aug 31 10:24:45 ubuntu-server sudo:   ubuntu : TTY=pts/0 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/usr/bin/whoami")
+    lines.append("Aug 31 10:25:02 ubuntu-server sudo:   ubuntu : TTY=pts/0 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/bin/bash")
+    lines.append("Aug 31 10:25:30 ubuntu-server sudo:   ubuntu : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/bin/cat /etc/shadow")
+    lines.append("Aug 31 10:26:15 ubuntu-server sudo:   ubuntu : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/usr/bin/chmod 777 /etc/passwd")
 
-1. INTRODUCTION & PROBLEM STATEMENT
-Artificial Intelligence (AI) and Machine Learning (ML) algorithms are transforming clinical diagnostics,
-personalized medicine, and hospital administrative operations. Clinicians are overwhelmed with hundreds of
-pages of Electronic Health Records (EHRs), patient clinical notes, and genomic sequencing data. 
-Automated NLP systems assist doctors by summarizing patient history and highlighting diagnostic risk factors.
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
 
-2. CLINICAL APPLICATIONS
-A. Medical Imaging: Deep Convolutional Neural Networks (CNNs) analyze radiographs, MRI scans, and CT scans
-   with diagnostic accuracy exceeding 92.5%, particularly in early oncology screening and thoracic pathology.
-B. Clinical NLP: Transformer models extract structured medical codes (ICD-10, SNOMED-CT) from unstructured
-   physician consultation notes, decreasing documentation overhead by 45%.
-C. Predictive Risk Stratification: Recurrent neural networks and gradient-boosted trees predict sepsis onset
-   up to 6 hours in advance, significantly lowering ICU mortality rates.
+def create_sample_firewall_log(filepath: Path):
+    """Create a firewall traffic log demonstrating port scans and outbound C2 beaconing."""
+    lines = []
+    # Inbound port scanning from 185.220.101.5
+    ports = [21, 22, 23, 25, 80, 110, 139, 443, 445, 1433, 3306, 3389, 8080, 8443]
+    for p in ports:
+        lines.append(f"Aug 31 09:45:10 firewall kernel: [UFW BLOCK] IN=eth0 OUT= MAC=00:15:5d:01:ca:fe SRC=185.220.101.5 DST=192.168.1.100 LEN=60 TOS=0x00 PREC=0x00 TTL=52 ID=1894 PROTO=TCP SPT=54210 DPT={p} WINDOW=64240 RES=0x00 SYN URGP=0")
+        
+    # Outbound C2 beaconing
+    for i in range(5):
+        lines.append(f"Aug 31 10:30:{i*10:02d} firewall kernel: [UFW ALLOW] IN=eth0 OUT=eth1 SRC=192.168.1.100 DST=185.220.101.5 LEN=140 PROTO=TCP SPT=49800 DPT=443 WINDOW=65535 ACK PSH URGP=0")
+        
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
 
-3. REGULATORY COMPLIANCE & ETHICAL SAFETY
-Clinical AI systems must adhere to strict regulatory standards including HIPAA, GDPR, and FDA Software as a
-Medical Device (SaMD) guidelines. Model explainability, source verification, and bias mitigation remain 
-critical requirements before deploying diagnostic AI at scale.
+def create_sample_web_log(filepath: Path):
+    """Create an Nginx access log showing SQL injection, directory traversal, and webshell queries."""
+    lines = [
+        '185.220.101.5 - - [31/Aug/2026:10:15:01 +0000] "GET /index.html HTTP/1.1" 200 4520',
+        '185.220.101.5 - - [31/Aug/2026:10:15:20 +0000] "GET /api/v1/users?id=1%27%20UNION%20SELECT%20null,username,password%20FROM%20users-- HTTP/1.1" 500 240',
+        '185.220.101.5 - - [31/Aug/2026:10:16:05 +0000] "GET /download.php?file=../../../../etc/passwd HTTP/1.1" 403 162',
+        '185.220.101.5 - - [31/Aug/2026:10:17:33 +0000] "POST /uploads/shell.php?cmd=whoami HTTP/1.1" 200 85',
+        '194.26.29.112 - - [31/Aug/2026:10:18:10 +0000] "GET /admin/config.php HTTP/1.1" 404 140',
+        '192.168.1.50 - - [31/Aug/2026:10:19:00 +0000] "GET /dashboard HTTP/1.1" 200 8920'
+    ]
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
 
-4. CONCLUSION
-Integrating semantic search and RAG architecture enables medical researchers to query thousands of biomedical
-journals rapidly, expediting clinical discovery and improving patient outcomes worldwide.
+def create_sample_ioc_csv(filepath: Path):
+    """Create a curated threat intelligence IOC CSV dataset."""
+    content = """indicator,type,risk_level,context,threat_actor,cve_id,confidence
+185.220.101.5,IP Address,Critical,Command and Control Server (C2),APT29,CVE-2023-38831,High
+194.26.29.112,IP Address,High,Data Exfiltration Relay,APT29,,High
+login-microsoft-secure.com,Domain,Critical,Credential Phishing Domain,APT29,,High
+cdn-update-service.org,Domain,High,Malware Payload Delivery,APT29,,High
+https://login-microsoft-secure.com/auth/login,URL,Critical,Phishing Endpoint,APT29,,High
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,SHA256,Critical,Weaponized Dropper Archive,APT29,CVE-2023-38831,High
+8f4e56c7a912e8b1a3d4f5e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6,SHA256,High,Cobalt Strike HTTPS Beacon DLL,APT29,,High
+CVE-2023-38831,CVE,Critical,WinRAR Remote Code Execution Vulnerability,APT29,CVE-2023-38831,High
+CVE-2021-44228,CVE,Critical,Apache Log4j RCE (Log4Shell),Generic Exploit,CVE-2021-44228,High
+mimikatz.exe,Suspicious File,Critical,Credential Dumping Tool,APT29,,High
 """
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
 
 def create_sample_pdf(filepath: Path):
-    """Generate a clean sample PDF document about Transformers and RAG using a minimal valid PDF generator."""
-    # Build standard PDF format bytes
+    """Generate a clean sample PDF document for APT29 Threat Advisory."""
     lines_p1 = [
-        "RESEARCH PAPER: TRANSFORMERS & RETRIEVAL-AUGMENTED GENERATION",
+        "INTELASSIST THREAT RESEARCH: APT29 COZY BEAR ADVISORY",
         "",
-        "Abstract:",
-        "Large Language Models (LLMs) often suffer from factual hallucinations and knowledge cutoff limitations.",
-        "Retrieval-Augmented Generation (RAG) mitigates these challenges by grounding generative responses in",
-        "authoritative external document repositories. This paper reviews self-attention mechanisms, vector indexing,",
-        "and top-k semantic context ranking.",
+        "Executive Summary:",
+        "IntelAssist Threat Research has detected a spear-phishing campaign attributed to threat actor APT29.",
+        "The adversary distributes malicious archives exploiting CVE-2023-38831 for remote code execution.",
+        "Observed C2 infrastructure includes IP 185.220.101.5 and domain login-microsoft-secure.com.",
         "",
-        "1. Attention Mechanism in Transformer Architectures:",
-        "The scaled dot-product attention function maps queries, keys, and values to an output vector weighted by",
-        "softmax compatibility: Attention(Q, K, V) = softmax(Q * K^T / sqrt(d_k)) * V.",
-        "Multi-Head Attention enables the model to jointly attend to information from different representation subspaces.",
+        "Technical Analysis & Attack Chain:",
+        "1. Spear-phishing email delivers weaponized ZIP file (SHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855).",
+        "2. WinRAR vulnerability CVE-2023-38831 executes hidden script without user interaction.",
+        "3. Outbound beacon connects to 185.220.101.5 on port 443 to fetch beacon.dll.",
+        "4. Adversary deploys mimikatz.exe for memory credential harvesting.",
         "",
-        "2. Vector Indexing and Semantic Similarity:",
-        "Embeddings map high-dimensional text chunks into dense vector representations. Cosine similarity calculates",
-        "the directional alignment between query embeddings and document chunk embeddings, enabling rapid nearest-neighbor retrieval."
+        "Recommended Containment Actions:",
+        "1. Immediately block IP 185.220.101.5 and 194.26.29.112 across all perimeter firewalls.",
+        "2. Sinkhole phishing domain login-microsoft-secure.com and payload server cdn-update-service.org.",
+        "3. Patch all endpoints against CVE-2023-38831 and enforce MFA on administrative accounts."
     ]
+
+    def escape_pdf(txt):
+        return txt.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+
+    stream_p1 = "BT\n/F1 10 Tf\n14 TL\n50 750 Td\n"
+    for line in lines_p1:
+        if line == "":
+            stream_p1 += "T*\n"
+        elif "INTELASSIST THREAT RESEARCH" in line:
+            stream_p1 += f"/F1 12 Tf\n({escape_pdf(line)}) Tj\n/F1 10 Tf\nT*\nT*\n"
+        else:
+            stream_p1 += f"({escape_pdf(line)}) Tj\nT*\n"
+    stream_p1 += "ET"
+
+    s1_bytes = stream_p1.encode('latin-1')
+
+    pdf_out = io.BytesIO()
+    pdf_out.write(b"%PDF-1.4\n")
     
-    lines_p2 = [
-        "3. Retrieval-Augmented Generation (RAG) Pipeline:",
-        "RAG combines parametric memory (pre-trained LLM weights) with non-parametric memory (vector database).",
-        "When a user submits a query, the retriever fetches the most relevant text chunks from the vector store.",
-        "The context is appended to the system prompt, instructing the LLM to formulate an evidence-backed answer.",
-        "",
-        "4. Experimental Evaluation & Results:",
-        "Our experiments demonstrate that RAG improves response factual accuracy by 38.4% and reduces hallucination",
-        "rates from 24.1% to less than 2.3% across open-domain technical benchmarks.",
-        "",
-        "5. Conclusion:",
-        "RAG represents a foundational architecture for enterprise AI and academic document assistants.",
-        "Source citations provide transparency and verifiable accountability for generative AI outputs."
-    ]
+    offsets = []
+    def write_obj(num, content):
+        offsets.append(pdf_out.tell())
+        pdf_out.write(f"{num} 0 obj\n".encode('ascii'))
+        pdf_out.write(content)
+        pdf_out.write(b"\nendobj\n")
 
-    def build_pdf_stream(pages_text_list):
-        objects = []
-        # obj 1: Catalog
-        # obj 2: Pages
-        # For each page: Page obj, Content stream obj
-        page_objs = []
-        
-        # We will dynamically construct objects
-        # 1: Catalog
-        # 2: Pages
-        # 3: Font
-        font_obj = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"
-        
-        content_objs = []
-        for lines in pages_text_list:
-            stream_body = "BT\n/F1 11 Tf\n50 750 Td\n15 TL\n"
-            for line in lines:
-                # Escape parentheses
-                safe_line = line.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
-                stream_body += f"({safe_line}) '\n"
-            stream_body += "ET"
-            content_objs.append(stream_body)
+    write_obj(1, b"<< /Type /Catalog /Pages 2 0 R >>")
+    write_obj(2, b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>")
+    write_obj(3, b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>")
+    write_obj(4, f"<< /Length {len(s1_bytes)} >>\nstream\n".encode('ascii') + s1_bytes + b"\nendstream")
+    write_obj(5, b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
 
-        total_pages = len(pages_text_list)
-        # Obj numbers:
-        # 1 = Catalog
-        # 2 = Pages
-        # 3 = Font
-        # For i in range(total_pages):
-        # 4 + 2*i = Page i
-        # 5 + 2*i = Content i
-        
-        pdf = "%PDF-1.4\n"
-        offsets = {}
-        
-        def add_obj(num, content):
-            nonlocal pdf
-            offsets[num] = len(pdf.encode("latin1"))
-            pdf += f"{num} 0 obj\n{content}\nendobj\n"
+    xref_pos = pdf_out.tell()
+    pdf_out.write(b"xref\n0 6\n0000000000 65535 f \n")
+    for off in offsets:
+        pdf_out.write(f"{off:010d} 00000 n \n".encode('ascii'))
+    pdf_out.write(b"trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n")
+    pdf_out.write(f"{xref_pos}\n%%EOF".encode('ascii'))
 
-        add_obj(1, "<< /Type /Catalog /Pages 2 0 R >>")
-        
-        kids_refs = " ".join([f"{4 + 2*i} 0 R" for i in range(total_pages)])
-        add_obj(2, f"<< /Type /Pages /Kids [{kids_refs}] /Count {total_pages} >>")
-        add_obj(3, font_obj)
-
-        for i in range(total_pages):
-            page_num = 4 + 2*i
-            content_num = 5 + 2*i
-            c_body = content_objs[i]
-            c_len = len(c_body.encode("latin1"))
-            
-            add_obj(page_num, f"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents {content_num} 0 R /Resources << /Font << /F1 3 0 R >> >> >>")
-            add_obj(content_num, f"<< /Length {c_len} >>\nstream\n{c_body}\nendstream")
-
-        xref_pos = len(pdf.encode("latin1"))
-        total_objs = 3 + 2 * total_pages
-        pdf += f"xref\n0 {total_objs + 1}\n0000000000 65535 f \n"
-        for i in range(1, total_objs + 1):
-            pdf += f"{offsets[i]:010d} 00000 n \n"
-            
-        pdf += f"trailer\n<< /Size {total_objs + 1} /Root 1 0 R >>\nstartxref\n{xref_pos}\n%%EOF"
-        return pdf.encode("latin1")
-
-    pdf_bytes = build_pdf_stream([lines_p1, lines_p2])
     with open(filepath, "wb") as f:
-        f.write(pdf_bytes)
+        f.write(pdf_out.getvalue())
 
-def generate_all_samples():
-    """Ensure all sample files exist in sample_data directory."""
+def generate_all_samples() -> list[Path]:
+    """Generate all academic and cyber sample datasets and return list of file paths."""
     SAMPLE_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    pdf_path = SAMPLE_DATA_DIR / "AI_Research_Paper_Transformers_and_RAG.pdf"
-    docx_path = SAMPLE_DATA_DIR / "Project_Report_IntelliAssist_AI.docx"
-    txt_path = SAMPLE_DATA_DIR / "Machine_Learning_Healthcare_Overview.txt"
+    
+    p_threat_pdf = SAMPLE_DATA_DIR / "Sample_Threat_Intel_Report_APT29.pdf"
+    p_auth_log = SAMPLE_DATA_DIR / "Sample_Auth_BruteForce.log"
+    p_fw_log = SAMPLE_DATA_DIR / "Sample_Firewall_Traffic.log"
+    p_web_log = SAMPLE_DATA_DIR / "Sample_Web_Server_Attacks.log"
+    p_ioc_csv = SAMPLE_DATA_DIR / "Sample_IOC_Feed.csv"
+    p_report_docx = SAMPLE_DATA_DIR / "Incident_Response_Forensics_Report.docx"
 
-    if not pdf_path.exists():
-        create_sample_pdf(pdf_path)
-    if not docx_path.exists():
-        create_sample_docx(docx_path)
-    if not txt_path.exists():
-        create_sample_txt(txt_path)
+    create_sample_pdf(p_threat_pdf)
+    create_sample_auth_log(p_auth_log)
+    create_sample_firewall_log(p_fw_log)
+    create_sample_web_log(p_web_log)
+    create_sample_ioc_csv(p_ioc_csv)
+    create_sample_threat_report_docx(p_report_docx)
 
-    return [pdf_path, docx_path, txt_path]
+    return [p_threat_pdf, p_auth_log, p_fw_log, p_web_log, p_ioc_csv, p_report_docx]

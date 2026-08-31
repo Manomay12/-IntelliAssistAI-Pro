@@ -6,9 +6,12 @@ Manages multi-session conversation logs, message storage, metadata, and persiste
 import json
 import time
 import uuid
+import logging
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from utils.config import CONVERSATIONS_DIR
+
+logger = logging.getLogger(__name__)
 
 class ConversationManager:
     """Manages chat sessions, messages, citations, feedback, and history persistence."""
@@ -89,7 +92,7 @@ class ConversationManager:
             with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(session_data, f, indent=2, ensure_ascii=False)
         except Exception as e:
-            print(f"Warning: Failed to save session {self.current_session_id}: {e}")
+            logger.warning("Failed to save session %s: %s", self.current_session_id, e)
 
     def load_session(self, session_id: str) -> bool:
         """Load a previous session by ID."""
@@ -107,7 +110,7 @@ class ConversationManager:
             self.messages = data.get("messages", [])
             return True
         except Exception as e:
-            print(f"Error loading session {session_id}: {e}")
+            logger.error("Error loading session %s: %s", session_id, e)
             return False
 
     def list_all_sessions(self) -> List[Dict[str, Any]]:

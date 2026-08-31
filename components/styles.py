@@ -1,32 +1,33 @@
 """
-CSS Design System and styling injection for IntelliAssist AI.
-Implements a sleek, modern AI SaaS dashboard aesthetic with glassmorphism, rounded cards,
-high-contrast action toolbars, custom scrollbars, status badges, and responsive typography.
+CSS Design System and Styling Injection for IntelAssist AI.
+Implements a sleek, modern Cybersecurity SOC Operations Center aesthetic with dark glassmorphism,
+monospace indicator chips, risk score badges, high-contrast action toolbars, and responsive telemetry cards.
 """
 
 import streamlit as st
 
 def inject_custom_styles():
-    """Inject custom CSS rules into the Streamlit app header."""
+    """Inject custom cybersecurity CSS rules into the Streamlit app header."""
     st.markdown("""
     <style>
     /* Google Fonts Import */
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
     /* Global Root Variables */
     :root {
-        --primary: #6366f1;
-        --primary-hover: #4f46e5;
-        --primary-light: rgba(99, 102, 241, 0.15);
-        --secondary: #0ea5e9;
-        --accent: #8b5cf6;
+        --primary: #0284c7;
+        --primary-hover: #0369a1;
+        --primary-light: rgba(56, 189, 248, 0.15);
+        --cyber-blue: #38bdf8;
+        --secondary: #64748b;
+        --accent-purple: #a855f7;
         --success: #10b981;
         --warning: #f59e0b;
         --danger: #ef4444;
-        --bg-dark: #090d16;
-        --card-bg: rgba(30, 41, 59, 0.5);
-        --card-border: rgba(255, 255, 255, 0.12);
-        --card-hover: rgba(255, 255, 255, 0.08);
+        --bg-dark: #080c14;
+        --card-bg: rgba(15, 23, 42, 0.75);
+        --card-border: rgba(56, 189, 248, 0.18);
+        --card-hover: rgba(56, 189, 248, 0.3);
         --text-main: #f8fafc;
         --text-muted: #94a3b8;
     }
@@ -36,11 +37,15 @@ def inject_custom_styles():
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
+    code, pre, .mono-font {
+        font-family: 'JetBrains Mono', monospace !important;
+    }
+
     /* Streamlit Main Container Tweaks */
     .block-container {
-        padding-top: 1.5rem;
-        padding-bottom: 6.5rem;
-        max-width: 1260px;
+        padding-top: 1.2rem;
+        padding-bottom: 5.5rem;
+        max-width: 1320px;
     }
 
     /* Custom Modern Scrollbars */
@@ -52,28 +57,28 @@ def inject_custom_styles():
         background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-        background: rgba(148, 163, 184, 0.3);
+        background: rgba(56, 189, 248, 0.25);
         border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(148, 163, 184, 0.5);
+        background: rgba(56, 189, 248, 0.5);
     }
 
-    /* Top Action Bar Buttons & Popovers - High Visibility */
+    /* Top Action Bar Buttons & Popovers */
     div[data-testid="stPopover"] > div > button,
     div[data-testid="stButton"] > button,
     div[data-testid="stDownloadButton"] > button {
-        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
-        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        background: linear-gradient(145deg, #111c35 0%, #0b1325 100%) !important;
+        border: 1px solid rgba(56, 189, 248, 0.25) !important;
         color: #f8fafc !important;
         font-weight: 600 !important;
-        font-size: 0.86rem !important;
-        border-radius: 10px !important;
+        font-size: 0.85rem !important;
+        border-radius: 8px !important;
         padding: 8px 14px !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
         white-space: nowrap !important;
-        min-height: 40px !important;
+        min-height: 38px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -83,155 +88,163 @@ def inject_custom_styles():
     div[data-testid="stPopover"] > div > button:hover,
     div[data-testid="stButton"] > button:hover,
     div[data-testid="stDownloadButton"] > button:hover {
-        background: linear-gradient(145deg, #334155 0%, #1e293b 100%) !important;
-        border-color: rgba(99, 102, 241, 0.7) !important;
-        color: #ffffff !important;
+        background: linear-gradient(145deg, #1e2e50 0%, #111c35 100%) !important;
+        border-color: rgba(56, 189, 248, 0.6) !important;
+        color: #38bdf8 !important;
         transform: translateY(-1px) !important;
-        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35) !important;
+        box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25) !important;
     }
 
-    /* Primary Accent Buttons */
+    /* Primary Cyber Buttons */
     button[kind="primary"],
     div[data-testid="stButton"] > button[kind="primary"] {
-        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
-        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%) !important;
+        border: 1px solid rgba(56, 189, 248, 0.4) !important;
         color: #ffffff !important;
         font-weight: 700 !important;
-        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4) !important;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4) !important;
     }
     button[kind="primary"]:hover,
     div[data-testid="stButton"] > button[kind="primary"]:hover {
-        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
-        border-color: rgba(255, 255, 255, 0.4) !important;
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6) !important;
+        background: linear-gradient(135deg, #0369a1 0%, #1d4ed8 100%) !important;
+        border-color: rgba(56, 189, 248, 0.8) !important;
+        box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5) !important;
         transform: translateY(-1px) !important;
     }
 
     /* Popover Body Container */
     div[data-testid="stPopoverBody"] {
-        background: #0f172a !important;
-        border: 1px solid rgba(99, 102, 241, 0.35) !important;
-        border-radius: 14px !important;
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7) !important;
+        background: #0b1325 !important;
+        border: 1px solid rgba(56, 189, 248, 0.35) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8) !important;
         padding: 16px !important;
         min-width: 320px !important;
     }
 
-    /* Hero Banner Header */
+    /* SOC Hero Banner */
     .hero-banner {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.18) 0%, rgba(139, 92, 246, 0.14) 50%, rgba(14, 165, 233, 0.1) 100%);
-        border: 1px solid rgba(99, 102, 241, 0.3);
-        border-radius: 20px;
+        background: linear-gradient(135deg, #0c1830 0%, #080f1e 100%);
+        border: 1px solid rgba(56, 189, 248, 0.22);
+        border-radius: 14px;
         padding: 24px 28px;
-        margin-bottom: 20px;
-        backdrop-filter: blur(12px);
+        margin-bottom: 22px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         position: relative;
         overflow: hidden;
     }
 
-    /* Streamlit Bordered Container Custom Styling (Unified Cards) */
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-        background: rgba(30, 41, 59, 0.45) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 14px !important;
-        padding: 12px 16px !important;
-        margin-bottom: 12px !important;
-        backdrop-filter: blur(16px) !important;
-        transition: all 0.22s ease-in-out !important;
-    }
-    div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-        border-color: rgba(99, 102, 241, 0.4) !important;
-        box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.45) !important;
+    .hero-banner::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 350px;
+        height: 100%;
+        background: radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+        pointer-events: none;
     }
 
-    /* Small compact action buttons inside card containers */
-    div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stButton"] > button {
-        min-height: 32px !important;
-        height: 32px !important;
-        font-size: 0.76rem !important;
-        padding: 2px 6px !important;
-        border-radius: 8px !important;
-        font-weight: 600 !important;
-        letter-spacing: -0.01em !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-    div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stButton"] > button:hover {
-        background: rgba(99, 102, 241, 0.25) !important;
-        border-color: rgba(99, 102, 241, 0.6) !important;
-        color: #ffffff !important;
-    }
-
-    /* Modern Card Component */
+    /* Modern SOC Cards */
     .modern-card {
-        background: rgba(30, 41, 59, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 20px 24px;
-        backdrop-filter: blur(16px);
-        transition: all 0.25s ease-in-out;
-        margin-bottom: 16px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 20px;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
     .modern-card:hover {
-        border-color: rgba(99, 102, 241, 0.45);
-        transform: translateY(-2px);
-        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+        border-color: var(--card-hover);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
     }
 
-    /* Activity Feed Item Styling */
-    .activity-item {
-        background: rgba(30, 41, 59, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.09);
-        border-radius: 12px;
-        padding: 11px 14px;
-        margin-bottom: 10px;
-        backdrop-filter: blur(12px);
-        transition: all 0.2s ease;
-    }
-    .activity-item:hover {
-        border-color: rgba(99, 102, 241, 0.35);
-        background: rgba(30, 41, 59, 0.65);
+    /* Threat Alert Card */
+    .alert-card-critical {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(239, 68, 68, 0.45);
+        border-left: 5px solid #ef4444;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 12px;
     }
 
-    /* Control Toolbar Card */
-    .toolbar-card {
-        background: rgba(15, 23, 42, 0.65);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 16px;
-        padding: 14px 18px;
-        margin-bottom: 16px;
-        backdrop-filter: blur(12px);
+    .alert-card-high {
+        background: linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(249, 115, 22, 0.45);
+        border-left: 5px solid #f97316;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+
+    .alert-card-elevated {
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(245, 158, 11, 0.45);
+        border-left: 5px solid #f59e0b;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 12px;
     }
 
     /* Metric Stat Card */
     .metric-card {
-        background: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
-        padding: 14px 18px;
+        background: linear-gradient(145deg, #0f1a30 0%, #091020 100%);
+        border: 1px solid rgba(56, 189, 248, 0.16);
+        border-radius: 12px;
+        padding: 18px 20px;
         position: relative;
         overflow: hidden;
-        transition: all 0.2s ease;
     }
     .metric-card:hover {
-        border-color: rgba(99, 102, 241, 0.45);
+        border-color: rgba(56, 189, 248, 0.35);
         transform: translateY(-2px);
     }
-    .metric-value {
-        font-size: 1.6rem;
+    .metric-card .stat-val {
+        font-size: 1.85rem;
         font-weight: 800;
-        letter-spacing: -0.02em;
-        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin: 2px 0;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin: 6px 0 2px 0;
+        font-family: 'JetBrains Mono', monospace;
     }
-    .metric-label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #94a3b8;
+
+    /* Indicator Badge Pill */
+    .ioc-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        border-radius: 6px;
+        padding: 4px 10px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.82rem;
+        color: #38bdf8;
+    }
+
+    /* Activity Feed Item */
+    .activity-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .activity-row:last-child {
+        border-bottom: none;
+    }
+
+    /* Timeline Point Card */
+    .timeline-card {
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 3px solid #38bdf8;
+        border-radius: 8px;
+        padding: 12px 14px;
+        margin-bottom: 10px;
     }
 
     /* Status Dot */
@@ -244,106 +257,25 @@ def inject_custom_styles():
     }
     .status-online {
         background: #10b981;
-        box-shadow: 0 0 10px #10b981;
+        box-shadow: 0 0 8px #10b981;
     }
     .status-demo {
-        background: #0ea5e9;
-        box-shadow: 0 0 10px #0ea5e9;
+        background: #38bdf8;
+        box-shadow: 0 0 8px #38bdf8;
+    }
+    .status-alert {
+        background: #ef4444;
+        box-shadow: 0 0 8px #ef4444;
     }
 
-    /* Tag and Topic Chips */
-    .chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 5px 14px;
-        border-radius: 9999px;
-        font-size: 0.82rem;
-        font-weight: 500;
-        background: rgba(99, 102, 241, 0.15);
-        color: #a5b4fc;
-        border: 1px solid rgba(99, 102, 241, 0.3);
-        margin: 3px 4px 3px 0;
-        transition: all 0.2s ease;
-    }
-    .chip:hover {
-        background: rgba(99, 102, 241, 0.25);
-        border-color: rgba(99, 102, 241, 0.5);
-    }
-
-    /* High-Visibility User Chat Bubble */
-    .chat-bubble-user {
-        background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #ffffff !important;
-        border-radius: 18px 18px 4px 18px;
-        padding: 14px 18px;
-        margin-left: auto;
-        max-width: 80%;
-        box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
-        font-size: 0.95rem;
-        line-height: 1.55;
-    }
-    .chat-bubble-user * {
-        color: #ffffff !important;
-    }
-
-    /* High-Visibility AI Chat Bubble */
-    .chat-bubble-ai {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        color: #f8fafc;
-        border-radius: 18px 18px 18px 4px;
-        padding: 18px 22px;
-        margin-right: auto;
-        max-width: 90%;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        font-size: 0.95rem;
-        line-height: 1.65;
-    }
-
-    /* Citation Box */
-    .source-box {
-        background: rgba(15, 23, 42, 0.7);
-        border: 1px solid rgba(99, 102, 241, 0.25);
-        border-radius: 12px;
-        padding: 12px 16px;
-        margin-top: 10px;
-        font-size: 0.85rem;
-    }
-
-    /* Progress Step Indicator */
-    .step-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 8px 12px;
-        border-radius: 8px;
-        margin-bottom: 6px;
-        background: rgba(255, 255, 255, 0.02);
-        font-size: 0.88rem;
-    }
-    .step-done {
-        color: #10b981;
-        font-weight: 600;
-    }
-    .step-active {
-        color: #6366f1;
-        font-weight: 700;
-        background: rgba(99, 102, 241, 0.1);
-    }
-    .step-pending {
-        color: #64748b;
-    }
-
-    /* Footer styling */
+    /* Footer */
     .app-footer {
         text-align: center;
-        padding-top: 2rem;
         color: #64748b;
-        font-size: 0.78rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        margin-top: 3rem;
+        font-size: 0.8rem;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
     </style>
     """, unsafe_allow_html=True)
