@@ -94,10 +94,25 @@ class ThreatCorrelator:
         total_correlations = len(matched_docs) + len(matched_logs) + len(co_occurring_iocs)
         is_found = total_correlations > 0
 
+        # Construct explicit explanation of WHY the relationship exists
+        reasons = []
+        if matched_docs and matched_logs:
+            reasons.append(f"Indicator '{target_indicator}' independently appears in both Threat Intelligence Reports and Security Event Logs.")
+        elif matched_docs:
+            reasons.append(f"Indicator '{target_indicator}' was cited in {len(matched_docs)} Threat Intelligence Document(s).")
+        elif matched_logs:
+            reasons.append(f"Indicator '{target_indicator}' triggered events across {len(matched_logs)} Security Log Stream(s).")
+
+        if co_occurring_iocs:
+            reasons.append(f"Shares co-occurring evidence sources with {len(co_occurring_iocs)} other threat indicators.")
+
+        correlation_reason = " ".join(reasons) if reasons else "No cross-source relationships recorded."
+
         return {
             "found": is_found,
             "target": target_indicator,
             "total_correlations": total_correlations,
+            "reason": correlation_reason,
             "matched_docs": matched_docs,
             "matched_logs": matched_logs,
             "co_occurring_iocs": co_occurring_iocs[:10],

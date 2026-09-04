@@ -464,19 +464,75 @@ class LogAnalyzer:
         return alerts
 
     @classmethod
+    def _parse_timestamp(cls, ts_str: str) -> float:
+        """Parse timestamp string to epoch float for chronological sorting, defaulting current year if missing."""
+        if not ts_str or ts_str == "Unknown" or ts_str == "N/A":
+            return 0.0
+
+        # Try ISO format
+        for fmt in (
+            "%Y-%m-%d %H:%M:%S",
+            "%Y-%m-%dT%H:%M:%S",
+            "%b %d %H:%M:%S",
+            "%b %e %H:%M:%S",
+            "%d/%b/%Y:%H:%M:%S"
+        ):
+            try:
+                # Remove timezone offset if present
+                clean_ts = ts_str.split("+")[0].split("-")[0] if "T" in ts_str and "-" in ts_str[10:] else ts_str
+                clean_ts = clean_ts.split("[")[1].split("]")[0] if "[" in clean_ts else clean_ts
+                dt = datetime.strptime(clean_ts.strip(), fmt)
+                if dt.year == 1900:  # Missing year in syslog format
+                    dt = dt.replace(year=datetime.now().year)
+                return dt.timestamp()
+            except ValueError:
+                continue
+        return 0.0
+
+    @classmethod
     def _generate_timeline(cls, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generate chronological event timeline points for visual timeline render."""
+        """Generate chronological, deduplicated, event-driven timeline points."""
         timeline: List[Dict[str, Any]] = []
+        seen_event_keys = set()
+
         for e in events:
-            if e.get("severity") in ["Elevated", "High", "Critical"] or e.get("event_type") in ["Successful Login", "Failed Login"]:
-                timeline.append({
-                    "time": e.get("timestamp", "N/A"),
-                    "title": e.get("event_type", "Event"),
-                    "severity": e.get("severity", "Medium"),
-                    "description": e.get("description", ""),
-                    "source_ip": e.get("source_ip", "")
-                })
-        return timeline[:30]
+            # Classification
+            sev = e.get("severity", "Medium")
+            etype = e.get("event_type", "Security Event")
+            ts = e.get("timestamp", "N/A")
+            src_ip = e.get("source_ip", "Unknown")
+            raw = e.get("raw", "")
+            desc = e.get("description", "")
+
+            # Deduplication key
+            dedup_key = (ts, etype, src_ip, desc[:50])
+            if dedup_key in seen_event_keys:
+                continue
+            seen_event_keys.add(dedup_key)
+
+            evidence_class = "OBSERVED"
+            if "Correlation" in etype or "Correlated" in etype:
+                evidence_class = "CORRELATED"
+            elif "Hypothesis" in etype or "Hypothetical" in etype:
+                evidence_class = "HYPOTHETICAL"
+
+            epoch_ts = cls._parse_timestamp(ts)
+
+            timeline.append({
+                "time": ts,
+                "epoch_time": epoch_ts,
+                "title": etype,
+                "event_type": etype,
+                "severity": sev,
+                "evidence_classification": evidence_class,
+                "description": desc,
+                "source_ip": src_ip,
+                "raw_evidence": raw
+            })
+
+        # Chronological sort
+        timeline.sort(key=lambda x: x["epoch_time"])
+        return timeline[:100]
 
     @classmethod
     def _empty_result(cls, filename: str) -> Dict[str, Any]:

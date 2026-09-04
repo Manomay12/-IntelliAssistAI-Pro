@@ -17,6 +17,35 @@ DARK_THEME_LAYOUT = dict(
     margin=dict(l=20, r=20, t=35, b=20),
 )
 
+def render_doc_distribution_chart(doc_type_counts: Dict[str, int]):
+    """Render horizontal bar chart for ingested document format distribution."""
+    if not doc_type_counts:
+        return
+
+    labels = list(doc_type_counts.keys())
+    values = list(doc_type_counts.values())
+
+    df = pd.DataFrame({"Format": labels, "Count": values})
+
+    fig = px.bar(
+        df,
+        x="Count",
+        y="Format",
+        orientation="h",
+        color="Format",
+        color_discrete_sequence=["#38bdf8", "#0284c7", "#f59e0b", "#a855f7", "#10b981"]
+    )
+
+    fig.update_layout(
+        **DARK_THEME_LAYOUT,
+        title=dict(text="<b>Ingested Artifact Formats</b>", font_size=13),
+        showlegend=False,
+        xaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.06)"),
+        yaxis=dict(showgrid=False),
+        height=250
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
 def render_ioc_distribution_chart(ioc_type_counts: Dict[str, int]):
     """Render a donut chart showing breakdown of extracted IOC types."""
     if not ioc_type_counts:
