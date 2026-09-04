@@ -152,10 +152,17 @@ class IOCExtractor:
         def add_ioc(raw_value: str, ioc_type: str, match_span: Tuple[int, int]):
             norm_val = cls.refang(raw_value).strip(" \t\n,;:\"'()[]{}<>")
             
-            # Additional validation
+            # Additional validation and normalization
+            if ioc_type in ["Domain", "URL", "Email", "SHA256", "SHA1", "MD5"]:
+                norm_val = norm_val.lower()
+
             if ioc_type == "IP Address":
                 try:
-                    ipaddress.ip_address(norm_val)
+                    ip_obj = ipaddress.ip_address(norm_val)
+                    # Filter out version numbers like 1.38.0 or 2.2.2 if matched erroneously
+                    # (must be valid IPv4)
+                    if ip_obj.version != 4:
+                        return
                 except ValueError:
                     return
             elif ioc_type == "Domain":

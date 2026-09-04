@@ -29,17 +29,37 @@ def render_attack_timeline_page(
     all_events: List[Dict[str, Any]] = []
     for log_data in log_data_list:
         fname = log_data.get("filename", "Log")
-        events = log_data.get("events", [])
-        for e in events:
-            all_events.append({
-                "time": e.get("timestamp", "N/A"),
-                "event_type": e.get("event_type", "Security Event"),
-                "severity": e.get("severity", "Medium"),
-                "source_ip": e.get("source_ip", "Unknown"),
-                "description": e.get("description", ""),
-                "source_file": fname,
-                "raw": e.get("raw", "")
-            })
+        tl_points = log_data.get("timeline", [])
+        if tl_points:
+            for item in tl_points:
+                all_events.append({
+                    "time": item.get("time", "N/A"),
+                    "epoch_time": item.get("epoch_time", 0.0),
+                    "event_type": item.get("title", item.get("event_type", "Security Event")),
+                    "severity": item.get("severity", "Medium"),
+                    "evidence_classification": item.get("evidence_classification", "OBSERVED"),
+                    "source_ip": item.get("source_ip", "Unknown"),
+                    "description": item.get("description", ""),
+                    "source_file": fname,
+                    "raw": item.get("raw_evidence", "")
+                })
+        else:
+            events = log_data.get("events", [])
+            for e in events:
+                all_events.append({
+                    "time": e.get("timestamp", "N/A"),
+                    "epoch_time": 0.0,
+                    "event_type": e.get("event_type", "Security Event"),
+                    "severity": e.get("severity", "Medium"),
+                    "evidence_classification": "OBSERVED",
+                    "source_ip": e.get("source_ip", "Unknown"),
+                    "description": e.get("description", ""),
+                    "source_file": fname,
+                    "raw": e.get("raw", "")
+                })
+
+    # Sort chronologically by epoch_time if available
+    all_events.sort(key=lambda x: x.get("epoch_time", 0.0))
 
     if not all_events:
         st.markdown("""
@@ -99,6 +119,9 @@ def render_attack_timeline_page(
         elif "firewall" in et_lower:
             mitre_tag = "T1046 (Network Scanning)"
 
+        ev_class = event.get("evidence_classification", "OBSERVED")
+        ev_class_color = "#10b981" if ev_class == "OBSERVED" else "#a855f7" if ev_class == "CORRELATED" else "#f59e0b"
+
         st.markdown(f"""
         <div class="timeline-card" style="border-left-color:{border_color}; margin-bottom:12px; padding:14px 18px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
@@ -107,6 +130,9 @@ def render_attack_timeline_page(
                         ⏱️ {event['time']}
                     </span>
                     <b style="font-size:0.95rem; color:#ffffff;">{event['event_type']}</b>
+                    <span style="font-size:0.7rem; font-weight:700; color:{ev_class_color}; border:1px solid {ev_class_color}; padding:1px 6px; border-radius:4px;">
+                        {ev_class}
+                    </span>
                 </div>
                 <div>{badge_html}</div>
             </div>
@@ -119,3 +145,7 @@ def render_attack_timeline_page(
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        if event.get("raw"):
+            with st.expander("🔍 View Raw Evidence", expanded=False):
+                st.code(event["raw"], language="text")

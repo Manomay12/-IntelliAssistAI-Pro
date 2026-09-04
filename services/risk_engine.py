@@ -96,8 +96,26 @@ class RiskEngine:
             score += 10
             breakdown.append({"points": 10, "factor": "Suspicious activity mentions in threat context"})
 
-        # Normalize score
-        final_score = max(5, min(100, score))
+        # Ensure total breakdown points strictly equal final score (clamped to 0-100)
+        adjusted_breakdown = []
+        running_score = 0
+        for item in breakdown:
+            pts = item["points"]
+            if pts <= 0:
+                continue
+            if running_score + pts > 100:
+                pts = 100 - running_score
+            if pts > 0:
+                adjusted_breakdown.append({"points": pts, "factor": item["factor"]})
+                running_score += pts
+            if running_score >= 100:
+                break
+
+        if running_score == 0 and (indicator or matched_docs or matched_logs):
+            running_score = 5
+            adjusted_breakdown.append({"points": 5, "factor": "Baseline indicator observation"})
+
+        final_score = running_score
         level, color, badge_class = cls.get_risk_level(final_score)
 
         return {
@@ -105,7 +123,7 @@ class RiskEngine:
             "level": level,
             "color": color,
             "badge_class": badge_class,
-            "breakdown": breakdown,
+            "breakdown": adjusted_breakdown,
             "confidence": base_confidence,
             "disclaimer": "Heuristic threat evaluation for analytical guidance. Does not represent an absolute verdict."
         }
@@ -152,7 +170,26 @@ class RiskEngine:
             score += pts
             breakdown.append({"points": pts, "factor": f"{len(crit_iocs)} High/Critical indicator(s) identified"})
 
-        final_score = max(10, min(100, score)) if (extracted_iocs or log_alerts) else 0
+        # Ensure breakdown points sum strictly equals final score
+        adjusted_breakdown = []
+        running_score = 0
+        for item in breakdown:
+            pts = item["points"]
+            if pts <= 0:
+                continue
+            if running_score + pts > 100:
+                pts = 100 - running_score
+            if pts > 0:
+                adjusted_breakdown.append({"points": pts, "factor": item["factor"]})
+                running_score += pts
+            if running_score >= 100:
+                break
+
+        if running_score == 0 and (extracted_iocs or log_alerts or total_failed_logins > 0):
+            running_score = 10
+            adjusted_breakdown.append({"points": 10, "factor": "Baseline ingested incident telemetry"})
+
+        final_score = running_score
         level, color, badge_class = cls.get_risk_level(final_score)
 
         return {
@@ -160,6 +197,6 @@ class RiskEngine:
             "level": level,
             "color": color,
             "badge_class": badge_class,
-            "breakdown": breakdown,
+            "breakdown": adjusted_breakdown,
             "disclaimer": "Aggregated incident posture score based on ingested telemetry and intelligence."
         }

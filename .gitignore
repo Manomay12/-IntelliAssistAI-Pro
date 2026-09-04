@@ -52,3 +52,4 @@ data/logs/*
 
 # Streamlit Secrets (keep config.toml tracked)
 .streamlit/secrets.toml
+streamlit.log

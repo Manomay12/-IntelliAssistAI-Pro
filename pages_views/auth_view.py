@@ -2,7 +2,7 @@
 Authentication and Analyst Access Page View for IntelAssist AI.
 """
 
-from typing import Dict, Any, Callable
+from typing import Dict, Any, Callable, Tuple, Optional
 import streamlit as st
 from utils.config import APP_NAME, APP_TAGLINE, APP_VERSION
 
